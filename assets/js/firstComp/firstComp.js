@@ -5,15 +5,26 @@ class Layout extends Component {
   constructor () {
     super()
     this.state = {
-      name: 'Joe'
+      name: 'Remy'
     }
   }
   clickedBtn = () => {
     console.log('swag')
   }
   render () {
-    return (<div className='home'>
-    This is my home page!!
+    return (
+      <div className='home'>
+         <div className ="container">
+            <header>
+              <div className ="logo">
+             Prypto Profits
+             </div>
+             <nav className="menu">
+               <a href="#">Register</a>
+             </nav>
+
+            </header>
+        </div>
       </div>)
   }
 }

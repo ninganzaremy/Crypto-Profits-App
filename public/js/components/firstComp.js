@@ -37,7 +37,7 @@ var Layout = function (_Component) {
     };
 
     _this.state = {
-      name: 'Joe'
+      name: 'Remy'
     };
     return _this;
   }
@@ -48,7 +48,28 @@ var Layout = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'home' },
-        'This is my home page!!'
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'header',
+            null,
+            _react2.default.createElement(
+              'div',
+              { className: 'logo' },
+              'Prypto Profits'
+            ),
+            _react2.default.createElement(
+              'nav',
+              { className: 'menu' },
+              _react2.default.createElement(
+                'a',
+                { href: '#' },
+                'Register'
+              )
+            )
+          )
+        )
       );
     }
   }]);

@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import ReactDOM from 'react-dom'
+import Home from './home.js'
 
 class Layout extends Component {
   constructor () {
@@ -7,9 +8,6 @@ class Layout extends Component {
     this.state = {
       name: 'Remy'
     }
-  }
-  clickedBtn = () => {
-    console.log('swag')
   }
   render () {
     return (
@@ -24,6 +22,7 @@ class Layout extends Component {
              </nav>
 
             </header>
+            <Home />
         </div>
       </div>)
   }

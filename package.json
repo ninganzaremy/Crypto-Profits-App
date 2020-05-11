@@ -7,6 +7,7 @@
   "license": "MIT",
   "homepage": "http://rocky.codingphase.com/",
   "dependencies": {
+    "@types/react": "^16.9.35",
     "axios": "^0.16.2",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",

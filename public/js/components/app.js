@@ -77,7 +77,7 @@ var Home = function (_Component) {
               null,
               ' Crypto Amount'
             ),
-            _react2.default.createElement('input', { type: 'text', name: 'price' }),
+            _react2.default.createElement('input', { type: 'text', name: 'amount', onChange: this.props.onInputChange, value: this.props.globalState.cryptoAmount }),
             _react2.default.createElement(
               'label',
               null,
@@ -256,21 +256,40 @@ var Layout = function (_Component) {
       name: 'Remy',
       location: 'home',
       date: (0, _moment2.default)(),
-      data: ''
+      data: '',
+      cryptoAmount: 1
     };
     _this.routingSystem = _this.routingSystem.bind(_this);
     _this.handleDateChange = _this.handleDateChange.bind(_this);
     _this.apicall = _this.apicall.bind(_this);
-
+    _this.onInputChange = _this.onInputChange.bind(_this);
     return _this;
   }
 
+  //react life-cycle
+
+
   _createClass(Layout, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var self = this;
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + (0, _moment2.default)().unix() + '&extraParams=crypto_profits_cp').then(function (response) {
+        self.setState({
+          btcToday: response.data.BTC
+        }, function () {
+          console.log(self.state);
+        });
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+    }
+  }, {
     key: 'routingSystem',
     value: function routingSystem() {
       switch (this.state.location) {
         case 'home':
-          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange, globalState: this.state });
+          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange, globalState: this.state, onInputChange: this.onInputChange });
           break;
 
         case 'results':
@@ -279,7 +298,6 @@ var Layout = function (_Component) {
 
         default:
           return _react2.default.createElement(_Home2.default, null);
-
       }
     }
   }, {
@@ -294,14 +312,46 @@ var Layout = function (_Component) {
       });
     }
   }, {
+    key: 'onInputChange',
+
+
+    //handle user_input
+    value: function onInputChange(event) {
+      this.setState({
+        cryptoAmount: event.target.value
+      });
+    }
+
+    // calling the api
+
+  }, {
     key: 'apicall',
     value: function apicall() {
       //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp
       var self = this;
-      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp').then(function (response) {
+      _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_profits_cp').then(function (response) {
         self.setState({
           data: response.data.BTC
         }, function () {
+          console.log(self.state);
+          var CP = self.state.data.USD;
+          var newCP = self.state.cryptoAmount * 100;
+          newCP = newCP * CP / 100;
+          var SP = self.state.btcToday.USD;
+          var newSP = self.state.cryptoAmount * 100;
+          newSP = newCP * SP / 100;
+          if (newCP < newSP) {
+            var gain = newSP - newCP;
+            var gainPercent = gain / newCP * 100;
+            gainPercent = gainPercent.toFixed(2);
+            console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP: ' + SP + ', newCP: ' + newCP + ', CP:' + CP);
+            console.log('profit percent is ' + gainPercent);
+          } else {
+            var loss = newCP - newSP;
+            var lossPercent = loss / newCP * 100;
+            lossPercent = lossPercent.toFixed(2);
+            console.log('loss percent is ' + lossPercent);
+          }
           console.log(self.state);
         });
       }).catch(function (error) {

@@ -4,6 +4,7 @@ import Home from './Home.js'
 import Results from './Results.js'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import axios from 'axios'
 
 
 class Layout extends Component {
@@ -12,10 +13,12 @@ class Layout extends Component {
     this.state = {
       name: 'Remy',
       location: 'home',
-      date: moment()
+      date: moment(),
+      data:''
     }
     this.routingSystem=this.routingSystem.bind(this)
     this.handleDateChange=this.handleDateChange.bind(this)
+    this.apicall=this.apicall.bind(this)
 
   }
   routingSystem(){
@@ -38,14 +41,31 @@ class Layout extends Component {
   handleDateChange(date) {
  this.setState({
    date: date
- }, () => console.log(this.state));
+ }, () => console.log(this.state.date.unix()));
 };
 
+apicall(){
+  //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp
+  var self = this;
+  axios.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp')
+  .then(function (response) {
+ self.setState({
+    data: response.data.BTC
+  }, () => {
+    console.log(self.state);
+  })
+
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+}
   render () {
     return (<div className='home'>
          <div className ="container">
             <header>
-              <div className ="logo">
+              <div className ="logo" onClick={this.apicall}>
              Prypto Profits
              </div>
              <nav className="menu">

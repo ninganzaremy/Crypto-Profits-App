@@ -15,12 +15,15 @@ class Layout extends Component {
       location: 'home',
       date: moment(),
       data:'',
-      cryptoAmount: 1
+      cryptoAmount: 1,
+      status: '',
+      totalStatus:''
     }
     this.routingSystem=this.routingSystem.bind(this)
     this.handleDateChange=this.handleDateChange.bind(this)
-    this.apicall=this.apicall.bind(this)
+    this.checkProfits=this.checkProfits.bind(this)
     this.onInputChange= this.onInputChange.bind(this)
+    this.goBack = this.goBack.bind(this)
   }
 
   //react life-cycle
@@ -47,11 +50,11 @@ class Layout extends Component {
   routingSystem(){
     switch(this.state.location) {
         case 'home':
-            return <Home handleDateChange={this.handleDateChange} globalState ={this.state}  onInputChange={this.onInputChange}/>
+            return <Home handleDateChange={this.handleDateChange} globalState ={this.state}  onInputChange={this.onInputChange} checkProfits={this.checkProfits}/>
           break;
 
         case 'results':
-             return <Results />
+             return <Results globalState={this.state} goBack={this.goBack}/>
           break;
 
         default:
@@ -77,7 +80,7 @@ class Layout extends Component {
 
 
 // calling the api
-apicall(){
+checkProfits(){
   //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp
   var self = this;
   axios.get(`https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=${self.state.date.unix()}&extraParams=crypto_profits_cp`)
@@ -98,13 +101,46 @@ apicall(){
           gainPercent = gainPercent.toFixed(2)
           console.log(`${self.state.cryptoAmount} bitcoin newSP: ${newSP}, SP: ${SP}, newCP: ${newCP}, CP:${CP}`)
           console.log(`profit percent is ${gainPercent}`)
+
+
+          //set state with totals and change location
+          self.setState({
+            location: 'results',
+            status:'gain',
+            totalStatus:{
+              newCP : newCP.toFixed(2),
+              CP: CP,
+              newSP: newSP.toFixed(2),
+              SP: SP,
+              percent: gainPercent
+            }
+          }, ()=> console.log(self.state))
+
+
         }else{
           var loss = newCP-newSP
           var lossPercent = (loss / newCP)* 100
           lossPercent =lossPercent.toFixed(2)
           console.log(`loss percent is ${lossPercent}`)
+
+
+          //set state with totals and change location
+          self.setState({
+            location: 'results',
+            status:'loss',
+            totalStatus:{
+              newCP : newCP.toFixed(2),
+              CP: CP,
+              newSP: newSP.toFixed(2),
+              SP: SP,
+              percent: lossPercent
+            }
+          }, ()=> console.log(self.state))
+
         }
-    console.log(self.state);
+    self.setState({
+      location: 'results'
+    })
   })
 
   })
@@ -114,14 +150,23 @@ apicall(){
   })
 }
 
-
+goBack(){
+  this.setState({
+    location: 'home',
+    date: moment(),
+    data:'',
+    cryptoAmount: 1,
+    status: '',
+    totalStatus:''
+  })
+}
 
   render () {
     return (<div className='home'>
          <div className ="container">
             <header>
-              <div className ="logo" onClick={this.apicall}>
-             Prypto Profits
+              <div className ="logo" onClick={this.checkProfits}>
+              CRYPTO PROFITS
              </div>
              <nav className="menu">
                <a href="#" className="main-btn">Register</a>
@@ -130,6 +175,11 @@ apicall(){
             </header>
              {this.routingSystem()}
         </div>
+        <footer>
+        <p className="footer">Copyright © 2020
+          REMY - Software Developer
+        </p>
+        </footer>
       </div>)
   }
 }

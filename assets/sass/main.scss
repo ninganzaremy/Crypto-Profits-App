@@ -10,8 +10,9 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: #0f0449
+  background: #0f0449;
 }
+
 header{
   padding: 17Px 0;
   overflow: auto;
@@ -52,4 +53,9 @@ header{
   &.active{
     background: #304ffe;
   }
+}
+.footer{
+  margin-top:30vh;
+  text-align: center;
+  color: white;
 }

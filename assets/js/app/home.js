@@ -27,10 +27,11 @@ export default class Home extends Component {
               <DatePicker  selected={this.props.globalState.date}
         onChange={this.props.handleDateChange} />
 
-              <button type="submit"> Check Profits </button>
+              <button type="submit" onClick={this.props.checkProfits}> Check Profits </button>
            </div>
         </div>
-
-      </section> )
+      </section>
+    
+       )
   }
 }

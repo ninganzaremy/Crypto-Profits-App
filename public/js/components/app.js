@@ -87,7 +87,7 @@ var Home = function (_Component) {
               onChange: this.props.handleDateChange }),
             _react2.default.createElement(
               'button',
-              { type: 'submit' },
+              { type: 'submit', onClick: this.props.checkProfits },
               ' Check Profits '
             )
           )
@@ -142,12 +142,37 @@ var Results = function (_Component) {
     _this.state = {
       name: 'Remy'
     };
+    _this.checkGains = _this.checkGains.bind(_this);
     return _this;
   }
 
   _createClass(Results, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+
+    //checking gains or loss
+
+  }, {
+    key: 'checkGains',
+    value: function checkGains() {
+      var percent = this.props.globalState.totalStatus.percent;
+
+      if (this.props.globalState.status == 'gain') {
+        return 'You  made ' + percent + '% profit';
+      } else {
+        return 'You  loss ' + percent + '% of your initial Investment';
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _props$globalState$to = this.props.globalState.totalStatus,
+          percent = _props$globalState$to.percent,
+          newCP = _props$globalState$to.newCP,
+          newSP = _props$globalState$to.newSP;
+
       return _react2.default.createElement(
         'section',
         { id: 'results' },
@@ -157,7 +182,15 @@ var Results = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-12' },
-            _react2.default.createElement('div', { className: 'ads' })
+            _react2.default.createElement(
+              'div',
+              { className: 'ads' },
+              _react2.default.createElement('ins', { className: 'adsbygoogle',
+                style: { "display": "block" },
+                'data-ad-client': 'ca-pub-1876888588409540',
+                'data-ad-slot': '6100356041',
+                'data-ad-format': 'auto' })
+            )
           ),
           _react2.default.createElement(
             'div',
@@ -165,28 +198,44 @@ var Results = function (_Component) {
             _react2.default.createElement(
               'h3',
               null,
-              ' Your $1200 dollar investment is now'
+              ' Your $',
+              newCP,
+              ' dollar investment is now'
             ),
             _react2.default.createElement(
               'h1',
               null,
-              ' $7300'
+              ' ',
+              newSP
             ),
             _react2.default.createElement(
               'h4',
               null,
-              ' You made 400% profits'
+              this.checkGains()
             ),
             _react2.default.createElement(
               'a',
               { href: '#', className: 'main-btn active' },
               'create account to keep track of all your records'
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: '#', className: 'main-btn ', onClick: this.props.goBack },
+              'or Check Another Transaction'
             )
           ),
           _react2.default.createElement(
             'div',
             { className: 'col-md-12' },
-            _react2.default.createElement('div', { className: 'ads' })
+            _react2.default.createElement(
+              'div',
+              { className: 'ads' },
+              _react2.default.createElement('ins', { className: 'adsbygoogle',
+                style: { "display": "block" },
+                'data-ad-client': 'ca-pub-1876888588409540',
+                'data-ad-slot': '6100356041',
+                'data-ad-format': 'auto' })
+            )
           )
         )
       );
@@ -257,12 +306,15 @@ var Layout = function (_Component) {
       location: 'home',
       date: (0, _moment2.default)(),
       data: '',
-      cryptoAmount: 1
+      cryptoAmount: 1,
+      status: '',
+      totalStatus: ''
     };
     _this.routingSystem = _this.routingSystem.bind(_this);
     _this.handleDateChange = _this.handleDateChange.bind(_this);
-    _this.apicall = _this.apicall.bind(_this);
+    _this.checkProfits = _this.checkProfits.bind(_this);
     _this.onInputChange = _this.onInputChange.bind(_this);
+    _this.goBack = _this.goBack.bind(_this);
     return _this;
   }
 
@@ -289,11 +341,11 @@ var Layout = function (_Component) {
     value: function routingSystem() {
       switch (this.state.location) {
         case 'home':
-          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange, globalState: this.state, onInputChange: this.onInputChange });
+          return _react2.default.createElement(_Home2.default, { handleDateChange: this.handleDateChange, globalState: this.state, onInputChange: this.onInputChange, checkProfits: this.checkProfits });
           break;
 
         case 'results':
-          return _react2.default.createElement(_Results2.default, null);
+          return _react2.default.createElement(_Results2.default, { globalState: this.state, goBack: this.goBack });
           break;
 
         default:
@@ -325,8 +377,8 @@ var Layout = function (_Component) {
     // calling the api
 
   }, {
-    key: 'apicall',
-    value: function apicall() {
+    key: 'checkProfits',
+    value: function checkProfits() {
       //https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=15131285669&extraParams=crypto_profits_cp
       var self = this;
       _axios2.default.get('https://min-api.cryptocompare.com/data/pricehistorical?fsym=BTC&tsyms=BTC,USD,EUR&ts=' + self.state.date.unix() + '&extraParams=crypto_profits_cp').then(function (response) {
@@ -346,17 +398,61 @@ var Layout = function (_Component) {
             gainPercent = gainPercent.toFixed(2);
             console.log(self.state.cryptoAmount + ' bitcoin newSP: ' + newSP + ', SP: ' + SP + ', newCP: ' + newCP + ', CP:' + CP);
             console.log('profit percent is ' + gainPercent);
+
+            //set state with totals and change location
+            self.setState({
+              location: 'results',
+              status: 'gain',
+              totalStatus: {
+                newCP: newCP.toFixed(2),
+                CP: CP,
+                newSP: newSP.toFixed(2),
+                SP: SP,
+                percent: gainPercent
+              }
+            }, function () {
+              return console.log(self.state);
+            });
           } else {
             var loss = newCP - newSP;
             var lossPercent = loss / newCP * 100;
             lossPercent = lossPercent.toFixed(2);
             console.log('loss percent is ' + lossPercent);
+
+            //set state with totals and change location
+            self.setState({
+              location: 'results',
+              status: 'loss',
+              totalStatus: {
+                newCP: newCP.toFixed(2),
+                CP: CP,
+                newSP: newSP.toFixed(2),
+                SP: SP,
+                percent: lossPercent
+              }
+            }, function () {
+              return console.log(self.state);
+            });
           }
-          console.log(self.state);
+          self.setState({
+            location: 'results'
+          });
         });
       }).catch(function (error) {
         // handle error
         console.log(error);
+      });
+    }
+  }, {
+    key: 'goBack',
+    value: function goBack() {
+      this.setState({
+        location: 'home',
+        date: (0, _moment2.default)(),
+        data: '',
+        cryptoAmount: 1,
+        status: '',
+        totalStatus: ''
       });
     }
   }, {
@@ -373,8 +469,8 @@ var Layout = function (_Component) {
             null,
             _react2.default.createElement(
               'div',
-              { className: 'logo', onClick: this.apicall },
-              'Prypto Profits'
+              { className: 'logo', onClick: this.checkProfits },
+              'CRYPTO PROFITS'
             ),
             _react2.default.createElement(
               'nav',
@@ -387,6 +483,15 @@ var Layout = function (_Component) {
             )
           ),
           this.routingSystem()
+        ),
+        _react2.default.createElement(
+          'footer',
+          null,
+          _react2.default.createElement(
+            'p',
+            { className: 'footer' },
+            'Copyright \xA9 2020 REMY - Software Developer'
+          )
         )
       );
     }

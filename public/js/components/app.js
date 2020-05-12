@@ -482,15 +482,79 @@ var Layout = function (_Component) {
               )
             )
           ),
-          this.routingSystem()
-        ),
-        _react2.default.createElement(
-          'footer',
-          null,
+          this.routingSystem(),
           _react2.default.createElement(
-            'p',
-            { className: 'footer' },
-            'Copyright \xA9 2020 REMY - Software Developer'
+            'footer',
+            null,
+            _react2.default.createElement(
+              'div',
+              { className: 'copyright-area' },
+              _react2.default.createElement(
+                'p',
+                { className: 'mb-0' },
+                'REMY \xA9 Software Developer'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'footer-social-icons' },
+              _react2.default.createElement(
+                'div',
+                { className: 'tooltip' },
+                _react2.default.createElement(
+                  'a',
+                  { href: 'https://www.linkedin.com/in/remy-ninganza/', rel: 'noopener', target: '_blank' },
+                  _react2.default.createElement('img', { src: 'img/linkedin.webP', alt: 'Linkedin' })
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'tooltiptext' },
+                  'My_Linkedin'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'tooltip' },
+                _react2.default.createElement(
+                  'a',
+                  { href: 'https://github.com/ninganzaremy', rel: 'noopener', target: '_blank' },
+                  _react2.default.createElement('img', { src: '/img/github.webP', alt: 'Github' })
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'tooltiptext' },
+                  'My_Github'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'tooltip' },
+                _react2.default.createElement(
+                  'a',
+                  { href: 'https://sourcerer.io/ninganzaremy', rel: 'noopener', target: '_blank' },
+                  _react2.default.createElement('img', { src: '/img/codepen.webP', alt: 'Pinterest' })
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'tooltiptext' },
+                  ' My_Sourcer'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'tooltip' },
+                _react2.default.createElement(
+                  'a',
+                  { href: 'https://twitter.com/RemyNinganza', rel: 'noopener', target: '_blank' },
+                  _react2.default.createElement('img', { src: '/img/twitter.webP', alt: 'Instagram' })
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'tooltiptext' },
+                  'My_Twitter'
+                )
+              )
+            )
           )
         )
       );

@@ -176,9 +176,9 @@ goBack(){
              {this.routingSystem()}
 
              <footer >
-                   <div className="copyright-area">
-                     <p className="mb-0">
-                      REMY © Software Developer
+                  <div className="copyright-area">
+                     <p >
+                      REMY © Developer
                      </p>
                    </div>
                    <div className="footer-social-icons">

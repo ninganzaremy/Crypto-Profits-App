@@ -491,7 +491,7 @@ var Layout = function (_Component) {
               { className: 'copyright-area' },
               _react2.default.createElement(
                 'p',
-                { className: 'mb-0' },
+                null,
                 'REMY \xA9 Software Developer'
               )
             ),

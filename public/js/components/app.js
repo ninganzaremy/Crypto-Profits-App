@@ -492,7 +492,7 @@ var Layout = function (_Component) {
               _react2.default.createElement(
                 'p',
                 null,
-                'REMY \xA9 Software Developer'
+                'REMY \xA9 Developer'
               )
             ),
             _react2.default.createElement(

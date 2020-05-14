@@ -34,7 +34,7 @@ export default class Results extends Component {
            <ins className="adsbygoogle"
      style={{"display":"block"}}
      data-ad-client="ca-pub-1876888588409540"
-     data-ad-slot="6100356041"
+     data-ad-slot="5700576241"
      data-ad-format="auto"></ins>
            </div>
           </div>

@@ -1,11 +1,9 @@
 {
-  "name": "RockyBoy",
+  "name": "Crypto-PROFITS",
   "version": "1.0.0",
   "description": "Super Cool Framework",
   "main": "index.js",
-  "author": "joe santos garcia",
   "license": "MIT",
-  "homepage": "http://rocky.codingphase.com/",
   "dependencies": {
     "@types/react": "^16.9.35",
     "axios": "^0.16.2",

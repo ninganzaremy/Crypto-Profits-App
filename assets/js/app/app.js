@@ -184,19 +184,19 @@ goBack(){
                    <div className="footer-social-icons">
                        <div  className="tooltip">
                          <a href="https://www.linkedin.com/in/remy-ninganza/" rel="noopener" target="_blank"><img src="img/linkedin.webP" alt="Linkedin"/></a>
-                         <span className="tooltiptext">My_Linkedin</span>
+                         <span className="tooltiptext">Linkedin</span>
                        </div>
                        <div  className="tooltip">
                          <a href="https://github.com/ninganzaremy" rel="noopener" target="_blank"><img src="/img/github.webP" alt="Github"/></a>
-                         <span className="tooltiptext">My_Github</span>
+                         <span className="tooltiptext">Github</span>
                        </div>
                        <div  className="tooltip">
                          <a href="https://sourcerer.io/ninganzaremy" rel="noopener" target="_blank"><img src="/img/codepen.webP" alt="Pinterest"/></a>
-                         <span className="tooltiptext"> My_Sourcer</span>
+                         <span className="tooltiptext">Sourcer</span>
                        </div>
                        <div  className="tooltip">
                          <a href="https://twitter.com/RemyNinganza" rel="noopener" target="_blank"><img src="/img/twitter.webP" alt="Instagram"/></a>
-                         <span className="tooltiptext">My_Twitter</span>
+                         <span className="tooltiptext">Twitter</span>
                        </div>
                    </div>
              </footer>

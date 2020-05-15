@@ -509,7 +509,7 @@ var Layout = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { className: 'tooltiptext' },
-                  'My_Linkedin'
+                  'Linkedin'
                 )
               ),
               _react2.default.createElement(
@@ -523,7 +523,7 @@ var Layout = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { className: 'tooltiptext' },
-                  'My_Github'
+                  'Github'
                 )
               ),
               _react2.default.createElement(
@@ -537,7 +537,7 @@ var Layout = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { className: 'tooltiptext' },
-                  ' My_Sourcer'
+                  'Sourcer'
                 )
               ),
               _react2.default.createElement(
@@ -551,7 +551,7 @@ var Layout = function (_Component) {
                 _react2.default.createElement(
                   'span',
                   { className: 'tooltiptext' },
-                  'My_Twitter'
+                  'Twitter'
                 )
               )
             )
